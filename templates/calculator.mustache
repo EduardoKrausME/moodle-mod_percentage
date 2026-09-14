@@ -1,0 +1,172 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_percentage/calculator
+
+    Example context (json):
+    {
+        Aqui tem que criar o context em inglês
+    }
+}}
+<div class="percentage-calculator" data-region="percentage-calculator"
+     data-default-visualization="{{visualization}}"
+     data-decimal-places="{{decimalplaces}}"
+     data-show-formula="{{#showformula}}1{{/showformula}}{{^showformula}}0{{/showformula}}"
+     data-show-explanation="{{#showexplanation}}1{{/showexplanation}}{{^showexplanation}}0{{/showexplanation}}">
+    <div class="percentage-shell">
+        <nav class="percentage-operation-tabs" aria-label="{{#str}}calculationtype, mod_percentage{{/str}}">
+            {{#operations}}
+                <button type="button" class="percentage-operation-tab {{#first}}is-active{{/first}}"
+                        data-action="select-operation" data-operation="{{key}}"
+                        aria-pressed="{{#first}}true{{/first}}{{^first}}false{{/first}}">
+                    {{label}}
+                </button>
+            {{/operations}}
+        </nav>
+
+        <div class="percentage-workspace">
+            <section class="percentage-input-panel" data-region="input-panel">
+                <div class="percentage-operation-form" data-operation-form="percentageof">
+                    <p class="percentage-question">{{#str}}question_percentageof, mod_percentage{{/str}}</p>
+                    <div class="percentage-fields percentage-fields-inline">
+                        <label>
+                            <span>{{#str}}percentage_label, mod_percentage{{/str}}</span>
+                            <div class="percentage-input-suffix">
+                                <input type="number" step="any" inputmode="decimal" data-field="percentage" value="18">
+                                <span>%</span>
+                            </div>
+                        </label>
+                        <label>
+                            <span>{{#str}}value_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="value" value="750">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="percentage-operation-form" data-operation-form="whatpercentage" hidden>
+                    <p class="percentage-question">{{#str}}question_whatpercentage, mod_percentage{{/str}}</p>
+                    <div class="percentage-fields percentage-fields-inline">
+                        <label>
+                            <span>{{#str}}part_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="part" value="135">
+                        </label>
+                        <label>
+                            <span>{{#str}}total_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="total" value="750">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="percentage-operation-form" data-operation-form="change" hidden>
+                    <p class="percentage-question">{{#str}}question_change, mod_percentage{{/str}}</p>
+                    <div class="percentage-fields percentage-fields-inline">
+                        <label>
+                            <span>{{#str}}initialvalue_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="initial" value="120">
+                        </label>
+                        <label>
+                            <span>{{#str}}finalvalue_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="final" value="156">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="percentage-operation-form" data-operation-form="increase" hidden>
+                    <p class="percentage-question">{{#str}}question_increase, mod_percentage{{/str}}</p>
+                    <div class="percentage-fields percentage-fields-inline">
+                        <label>
+                            <span>{{#str}}basevalue_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="base" value="500">
+                        </label>
+                        <label>
+                            <span>{{#str}}increasepercentage_label, mod_percentage{{/str}}</span>
+                            <div class="percentage-input-suffix">
+                                <input type="number" step="any" inputmode="decimal" data-field="percentage" value="20">
+                                <span>%</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="percentage-operation-form" data-operation-form="discount" hidden>
+                    <p class="percentage-question">{{#str}}question_discount, mod_percentage{{/str}}</p>
+                    <div class="percentage-fields percentage-fields-inline">
+                        <label>
+                            <span>{{#str}}basevalue_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="base" value="500">
+                        </label>
+                        <label>
+                            <span>{{#str}}discountpercentage_label, mod_percentage{{/str}}</span>
+                            <div class="percentage-input-suffix">
+                                <input type="number" step="any" inputmode="decimal" data-field="percentage" value="20">
+                                <span>%</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="percentage-operation-form" data-operation-form="margin" hidden>
+                    <p class="percentage-question">{{#str}}question_margin, mod_percentage{{/str}}</p>
+                    <div class="percentage-fields percentage-fields-inline">
+                        <label>
+                            <span>{{#str}}cost_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="cost" value="70">
+                        </label>
+                        <label>
+                            <span>{{#str}}sale_label, mod_percentage{{/str}}</span>
+                            <input type="number" step="any" inputmode="decimal" data-field="sale" value="100">
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary percentage-calculate" data-action="calculate">
+                    {{#str}}calculate, mod_percentage{{/str}}
+                </button>
+            </section>
+
+            <section class="percentage-result-panel" aria-live="polite">
+                <div class="percentage-result-empty" data-region="empty-result">
+                    <strong>{{#str}}resultwaitingtitle, mod_percentage{{/str}}</strong>
+                    <span>{{#str}}resultwaitingtext, mod_percentage{{/str}}</span>
+                </div>
+
+                <div data-region="result" hidden>
+                    <span class="percentage-result-label">{{#str}}result, mod_percentage{{/str}}</span>
+                    <div class="percentage-result-value" data-region="result-value"></div>
+                    <div class="percentage-result-secondary" data-region="result-secondary"></div>
+                    <div class="percentage-formula" data-region="formula"></div>
+                    <p class="percentage-explanation" data-region="explanation"></p>
+                </div>
+            </section>
+        </div>
+
+        <section class="percentage-visual-panel" data-region="visual-panel" hidden>
+            <div class="percentage-visual-heading">
+                <div>
+                    <span class="percentage-eyebrow">{{#str}}graphicalview, mod_percentage{{/str}}</span>
+                    <h3>{{#str}}understandpercentage, mod_percentage{{/str}}</h3>
+                </div>
+                <div class="percentage-visual-switcher" role="group" aria-label="{{#str}}choosevisualization, mod_percentage{{/str}}">
+                    {{#visualizations}}
+                        <button type="button" data-action="change-visualization" data-visualization="{{key}}">{{label}}</button>
+                    {{/visualizations}}
+                </div>
+            </div>
+            <div class="percentage-visual" data-region="visual"></div>
+        </section>
+    </div>
+</div>
