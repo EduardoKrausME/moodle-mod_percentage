@@ -16,7 +16,7 @@
 /**
  * calculator.js
  *
- * @package   mod_percentage
+ * @module     mod_percentage/calculator
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -138,7 +138,8 @@ define(["jquery", "core/str"], function($, Str) {
             result = {
                 primary: `${difference >= 0 ? "+" : ""}${formatPercent(percentage)}`,
                 secondary: `${direction}: ${difference >= 0 ? "+" : ""}${formatNumber(difference)}`,
-                formula: `(${formatNumber(final)} − ${formatNumber(initial)}) ÷ ${formatNumber(Math.abs(initial))} × 100 = ${formatPercent(percentage)}`,
+                formula: `(${formatNumber(final)} − ${formatNumber(initial)}) ÷ ` +
+                    `${formatNumber(Math.abs(initial))} × 100 = ${formatPercent(percentage)}`,
                 explanation: state.strings.result_change,
                 percent: percentage,
                 initial: initial,
@@ -157,7 +158,8 @@ define(["jquery", "core/str"], function($, Str) {
             result = {
                 primary: formatNumber(final),
                 secondary: `${state.strings.increase_label}: +${formatNumber(addition)}`,
-                formula: `${formatNumber(base)} + (${formatNumber(base)} × ${formatNumber(percentage)} ÷ 100) = ${formatNumber(final)}`,
+                formula: `${formatNumber(base)} + (${formatNumber(base)} × ` +
+                    `${formatNumber(percentage)} ÷ 100) = ${formatNumber(final)}`,
                 explanation: state.strings.result_increase,
                 percent: percentage,
                 initial: base,
@@ -176,7 +178,8 @@ define(["jquery", "core/str"], function($, Str) {
             result = {
                 primary: formatNumber(final),
                 secondary: `${state.strings.decrease_label}: -${formatNumber(discount)}`,
-                formula: `${formatNumber(base)} − (${formatNumber(base)} × ${formatNumber(percentage)} ÷ 100) = ${formatNumber(final)}`,
+                formula: `${formatNumber(base)} − (${formatNumber(base)} × ` +
+                    `${formatNumber(percentage)} ÷ 100) = ${formatNumber(final)}`,
                 explanation: state.strings.result_discount,
                 percent: percentage,
                 initial: base,
@@ -199,8 +202,10 @@ define(["jquery", "core/str"], function($, Str) {
             const markup = (profit / cost) * 100;
             result = {
                 primary: `${state.strings.result_margin}: ${formatPercent(margin)}`,
-                secondary: `${state.strings.result_markup}: ${formatPercent(markup)} · ${state.strings.result_profit}: ${formatNumber(profit)}`,
-                formula: `(${formatNumber(sale)} − ${formatNumber(cost)}) ÷ ${formatNumber(sale)} × 100 = ${formatPercent(margin)}`,
+                secondary: `${state.strings.result_markup}: ${formatPercent(markup)} · ` +
+                    `${state.strings.result_profit}: ${formatNumber(profit)}`,
+                formula: `(${formatNumber(sale)} − ${formatNumber(cost)}) ÷ ` +
+                    `${formatNumber(sale)} × 100 = ${formatPercent(margin)}`,
                 explanation: state.strings.explanation_margin,
                 percent: margin,
                 cost: cost,
@@ -226,8 +231,12 @@ define(["jquery", "core/str"], function($, Str) {
         root.find("[data-region='result']").prop("hidden", false);
         root.find("[data-region='result-value']").text(result.primary);
         root.find("[data-region='result-secondary']").text(result.secondary || "");
-        root.find("[data-region='formula']").text(state.options.showformula ? result.formula : "").toggle(state.options.showformula);
-        root.find("[data-region='explanation']").text(state.options.showexplanation ? result.explanation : "").toggle(state.options.showexplanation);
+        root.find("[data-region='formula']")
+            .text(state.options.showformula ? result.formula : "")
+            .toggle(state.options.showformula);
+        root.find("[data-region='explanation']")
+            .text(state.options.showexplanation ? result.explanation : "")
+            .toggle(state.options.showexplanation);
         root.find("[data-region='visual-panel']").prop("hidden", false);
 
         const selected = state.visualization === "auto" ? result.auto : state.visualization;
@@ -265,7 +274,8 @@ define(["jquery", "core/str"], function($, Str) {
                 </div>
                 <div class="percentage-composition-legend">
                     <span>${escapeHtml(state.strings.cost_label)}: ${escapeHtml(formatNumber(result.cost))}</span>
-                    <span>${escapeHtml(state.strings.profit_label)}: ${escapeHtml(formatNumber(result.profit))} (${escapeHtml(formatPercent(result.percent))})</span>
+                    <span>${escapeHtml(state.strings.profit_label)}: ${escapeHtml(formatNumber(result.profit))}
+                        (${escapeHtml(formatPercent(result.percent))})</span>
                     <span>${escapeHtml(state.strings.sale_label)}: ${escapeHtml(formatNumber(result.sale))}</span>
                 </div>
             </div>`;
@@ -294,7 +304,9 @@ define(["jquery", "core/str"], function($, Str) {
                  style="background:conic-gradient(var(--percentage-primary) 0deg ${degrees}deg, #e5eaf0 ${degrees}deg 360deg)">
                 <strong>${escapeHtml(formatPercent(result.percent))}</strong>
             </div>
-            <div class="percentage-donut-copy">${escapeHtml(formatPercent(percentage))} ${escapeHtml(state.strings.of_total_100)}</div>
+            <div class="percentage-donut-copy">
+                ${escapeHtml(formatPercent(percentage))} ${escapeHtml(state.strings.of_total_100)}
+            </div>
         </div>`;
     };
 
@@ -308,13 +320,19 @@ define(["jquery", "core/str"], function($, Str) {
                 cells += `<span class="percentage-grid-cell is-filled"></span>`;
             } else if (i === full && fraction > 0) {
                 const degrees = fraction * 360;
-                cells += `<span class="percentage-grid-cell is-partial" style="background:conic-gradient(var(--percentage-primary) 0deg ${degrees}deg, #f0f3f7 ${degrees}deg 360deg)"></span>`;
+                cells += `<span class="percentage-grid-cell is-partial"
+                    style="background:conic-gradient(var(--percentage-primary) 0deg ${degrees}deg,
+                        #f0f3f7 ${degrees}deg 360deg)"></span>`;
             } else {
                 cells += `<span class="percentage-grid-cell"></span>`;
             }
         }
-        return `<div class="percentage-grid100" role="img" aria-label="${escapeHtml(formatPercent(result.percent))}">${cells}</div>
-            <div class="percentage-grid-caption"><strong>${escapeHtml(formatPercent(result.percent))}</strong> = ${escapeHtml(formatNumber(percentage))} ${escapeHtml(state.strings.out_of_100)}</div>`;
+        return `<div class="percentage-grid100" role="img"
+            aria-label="${escapeHtml(formatPercent(result.percent))}">${cells}</div>
+            <div class="percentage-grid-caption">
+                <strong>${escapeHtml(formatPercent(result.percent))}</strong> =
+                ${escapeHtml(formatNumber(percentage))} ${escapeHtml(state.strings.out_of_100)}
+            </div>`;
     };
 
     const comparisonHtml = (result) => {
