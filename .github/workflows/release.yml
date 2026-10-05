@@ -8,9 +8,7 @@ permissions:
 jobs:
   auto-release:
     if: startsWith(github.event.head_commit.message, 'V ')
-
-    runs-on:
-      ubuntu-latest
+    runs-on: ubuntu-latest
 
     outputs:
       tag: ${{ steps.ver.outputs.version }}
@@ -34,7 +32,8 @@ jobs:
 
       - name: Stop if there is no version
         if: steps.ver.outputs.version == ''
-        run: echo "Ignoring: commit is not a release."
+        run: |
+          echo "Ignoring: commit is not a release."
 
       - name: Create installable Moodle ZIP
         if: steps.ver.outputs.version != ''
