@@ -66,4 +66,13 @@ class restore_percentage_activity_task extends restore_activity_task {
     public static function define_decode_rules() {
         return [];
     }
+
+    /**
+     * Define restore log rules for the activity.
+     *
+     * @return array Restore log rules.
+     */
+    public static function define_restore_log_rules() {
+        return [];
+    }
 }
