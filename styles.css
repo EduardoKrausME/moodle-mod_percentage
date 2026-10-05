@@ -4,7 +4,7 @@
     --percentage-border: #dce3eb;
     --percentage-text: #172033;
     --percentage-muted: #657083;
-    --percentage-surface: #ffffff;
+    --percentage-surface: #fff;
     --percentage-surface-alt: #f7f9fc;
     color: var(--percentage-text);
     margin: 1.5rem 0;
@@ -155,7 +155,7 @@
 .percentage-result-value {
     margin-top: .25rem;
     color: var(--percentage-primary);
-    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-size: 3.4rem;
     line-height: 1.05;
     font-weight: 750;
 }
