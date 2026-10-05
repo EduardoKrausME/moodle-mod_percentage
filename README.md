@@ -1,32 +1,32 @@
-# mod_percentage
+# Percentage calculator
 
-Atividade Moodle para cálculo e visualização de porcentagens.
+`mod_percentage` is a Moodle activity for calculating and visualizing percentages directly inside a course. It is useful in mathematics, finance, business and any learning activity where students need to understand not only the numeric result, but also how the percentage relates to the original values.
 
-## Cálculos
+## Calculations
 
-- Porcentagem de um valor.
-- Descobrir qual porcentagem uma parte representa do total.
-- Variação percentual entre valor inicial e final.
-- Acréscimo percentual.
-- Desconto percentual.
-- Margem, markup e lucro.
+The activity supports:
 
-## Visualizações
+- percentage of a value;
+- percentage represented by a part of a total;
+- percentage change between an initial and a final value;
+- percentage increase;
+- percentage discount;
+- margin, markup and profit.
 
-- Seleção automática conforme o cálculo.
-- Barra proporcional.
-- Gráfico de rosca.
-- Grade 10 × 10 para representar "por cento" literalmente.
-- Comparação antes/depois.
+## Visualizations
 
-O professor pode limitar os tipos de cálculo disponíveis, escolher a visualização padrão, definir até seis casas decimais e decidir se a fórmula e a explicação curta serão mostradas.
+Results can be represented as a proportional bar, donut chart, 10 × 10 percentage grid or before/after comparison. The activity can also choose the visualization automatically according to the calculation.
 
-Os cálculos são executados no navegador e não são gravados como dados pessoais do estudante.
+## Teacher configuration
 
-## Compatibilidade
+Teachers can choose which calculation types are available, define the default visualization, set the number of decimal places and decide whether students see the formula and a short explanation together with the result.
 
-Requer Moodle 4.5 ou posterior.
+## How it works
 
-## Instalação
+Students enter the values, calculate the result and can switch between the available visual representations. Calculations run in the browser and the entered values are not stored as personal student data.
 
-Copie a pasta `percentage` para `mod/percentage` e conclua a atualização administrativa do Moodle.
+## Screenshots
+
+![Percentage calculator](https://raw.githubusercontent.com/EduardoKrausME/marketplace-plugins/master/screenshots/mod_percentage/new-1.png)
+
+![Percentage visualization](https://raw.githubusercontent.com/EduardoKrausME/marketplace-plugins/master/screenshots/mod_percentage/new-2.png)
