@@ -17,6 +17,7 @@
  * calculator.js
  *
  * @module     mod_percentage/calculator
+ * @package   mod_percentage
  * @copyright 2026 Eduardo Kraus {@link https://eduardokraus.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
