@@ -96,10 +96,6 @@ jobs:
       if: ${{ !cancelled() }}
       run: moodle-plugin-ci validate
 
-    - name: Grunt
-      if: ${{ !cancelled() }}
-      run: moodle-plugin-ci grunt
-
     - name: Check upgrade savepoints
       if: ${{ !cancelled() }}
       run: moodle-plugin-ci savepoints
